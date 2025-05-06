@@ -1,7 +1,16 @@
 let nonsenseWords = [];
+let dandelion;
+let bg;
+
 
 function windowResized() {
-  resizeCanvas(windowWidth, windowHeight)
+  resizeCanvas(windowWidth, windowHeight);
+}
+
+function preload() {
+  dandelion = loadImage("img/dand3.png");
+  bg = loadImage("img/green.gif"); // or "img/green.gif" if it's in an img folder
+
 }
 
 
@@ -22,7 +31,9 @@ function setup() {
 }
 
 function draw() {
-  background(15, 40, 30); 
+  background(bg);
+
+  image(dandelion, 40, height / 2 - 150, 800, 900);
 
   for (let word of nonsenseWords) {
     text("nonsense", word.x, word.y);
@@ -32,6 +43,17 @@ function draw() {
     if (word.x > width + 50) {
       word.x = -100;
       word.y = random(height);
+    }
+  }
+}
+
+
+function mousePressed() {
+  for (let word of nonsenseWords) {
+    let d = dist(mouseX, mouseY, word.x, word.y);
+    if (d < 50) { // adjust the sensitivity if needed
+      window.location.href = "ghost.html"; // replace with your next page
+      break; // exit loop after the first match
     }
   }
 }

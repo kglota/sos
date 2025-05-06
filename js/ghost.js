@@ -1,35 +1,44 @@
-let fog;
-let baseLayer;
-
-function windowResized() {
-    resizeCanvas(windowWidth, windowHeight)
-  }
-  
-  
+let ripples = [];
 
 function setup() {
-    createCanvas(windowWidth, windowHeight);
-
-  baseLayer = createGraphics(width, height);
-  baseLayer.background(50);
-  baseLayer.fill(255);
-  baseLayer.textSize(40);
-  baseLayer.textAlign(CENTER, CENTER);
-  baseLayer.text("I NEED\nHUMANITY", width / 2, height / 2);
-
-  fog = createGraphics(width, height);
-  fog.background(200);
-  fog.noStroke();
+  createCanvas(windowWidth, windowHeight);
+  noFill();
 }
 
 function draw() {
-  image(baseLayer, 0, 0);
+  clear(); // transparent so gif shows behind
 
-  if (mouseIsPressed) {
-    fog.erase();
-    fog.ellipse(mouseX, mouseY, 50, 50);
-    fog.noErase();
+  for (let i = ripples.length - 1; i >= 0; i--) {
+    let r = ripples[i];
+    
+    stroke(255, r.alpha);
+    strokeWeight(2);
+    ellipse(r.x, r.y, r.radius);
+    
+    // 📝 Show text if this ripple is flagged
+    if (r.word) {
+      noStroke();
+      fill(255, r.alpha);
+      textSize(18);
+      textAlign(CENTER);
+      text("I need humanity", r.x, r.y);
+    }
+
+    r.radius += 2;
+    r.alpha -= 3;
+
+    if (r.alpha <= 0) {
+      ripples.splice(i, 1);
+    }
   }
+}
 
-  image(fog, 0, 0);
+function mousePressed() {
+  ripples.push({
+    x: mouseX,
+    y: mouseY,
+    radius: 0,
+    alpha: 255,
+    word: true // flag this ripple to show the text
+  });
 }
