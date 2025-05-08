@@ -18,7 +18,7 @@ function draw() {
     // 📝 Show text if this ripple is flagged
     if (r.word) {
       noStroke();
-      fill(255, r.alpha);
+      fill(173,216,230, r.alpha);
       textSize(18);
       textAlign(CENTER);
       text("I need humanity", r.x, r.y);
@@ -41,4 +41,7 @@ function mousePressed() {
     alpha: 255,
     word: true // flag this ripple to show the text
   });
+  setTimeout(() => {
+    window.location.href = "sun.html";
+  }, 5000); // delay for a gentle pause
 }

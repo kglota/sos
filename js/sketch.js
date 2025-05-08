@@ -8,6 +8,7 @@ let charPositions = [];
 
 
 
+
 function preload() {
   // Load the GIF and hide the HTML image element
 bgGif = createImg("img/ocean.gif");
@@ -33,6 +34,11 @@ for (let i = 0; i < lineCount; i++) {
 
 function draw() {
   clear();
+  fill(255);
+  textAlign(CENTER, BOTTOM);
+  textSize(20);
+  text("wish to start", width / 2, height - 40);
+
   charPositions = []; // reset each frame
 
   for (let l = 0; l < lineCount; l++) {
